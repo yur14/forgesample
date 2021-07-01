@@ -1,8 +1,11 @@
 const express = require('express');
+const {config} = require("dotenv");
 
 const { getPublicToken } = require('./common/oauth');
 
 let router = express.Router();
+
+//let authClient = new AuthenticationClient(config.client_id, config.client_secret);
 
 // GET /api/forge/oauth/token - generates a public access token (required by the Forge viewer).
 router.get('/token', async (req, res, next) => {
@@ -23,8 +26,8 @@ router.get('/token', async (req, res, next) => {
 //////////добавил методы из issue-editor
 
 // GET /auth/login
-router.get('/login', function (req, res) {
-    const url = authClient.getAuthorizeRedirect(config.scopes, config.redirect_uri);
+router.get('/login', function (req, res, {getAuthorizeRedirect}) {
+    const url = getAuthorizeRedirect(config.scopes, config.redirect_uri);
     res.redirect(url);
 });
 

@@ -7,6 +7,9 @@ const config = require('../../config');
  * @param {string[]} scopes List of resource access scopes.
  * @returns {AuthClientTwoLegged} 2-legged authentication client.
  */
+
+//let authClient = new AuthenticationClient(config.client_id, config.client_secret);
+
 function getClient(scopes) {
     const { client_id, client_secret } = config.credentials;
     return new AuthClientTwoLegged(client_id, client_secret, scopes || config.scopes.internal);

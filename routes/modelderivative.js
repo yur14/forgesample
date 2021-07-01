@@ -11,6 +11,7 @@ const { getClient, getInternalToken } = require('./common/oauth');
 
 let router = express.Router();
 
+//let authClient = new AuthenticationClient(config.client_id, config.client_secret);
 // Middleware for obtaining a token for each request.
 router.use(async (req, res, next) => {
     req.oauth_token = await getInternalToken();

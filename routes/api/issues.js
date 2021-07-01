@@ -10,6 +10,7 @@ const mail = require('@sendgrid/mail');
 const upload = multer({ dest: 'uploads/' });
 
 const config = require('../../config');
+//const config = require('config.js');
 const { exportIssues, importIssues } = require('../../helpers/excel');
 
 mail.setApiKey(config.sendgrid_key);
