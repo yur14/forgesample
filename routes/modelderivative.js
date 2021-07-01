@@ -13,8 +13,7 @@ let router = express.Router();
 
 // Middleware for obtaining a token for each request.
 router.use(async (req, res, next) => {
-    const token = await getInternalToken();
-    req.oauth_token = token;
+    req.oauth_token = await getInternalToken();
     req.oauth_client = getClient();
     next();
 });

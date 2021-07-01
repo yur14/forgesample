@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 
 <head>
   <title>View Models - Autodesk Forge</title>
@@ -18,9 +18,9 @@
   <link href="css/main.css" rel="stylesheet" />
   <script src="js/ForgeTree.js"></script>
   <script src="js/ForgeViewer.js"></script>
-  <script src="/js/myawesomeextension.js"></script>
-  <script src="/js/handleselectionextension.js"></script>
-  <script src="/js/dockingpanelextension.js"></script>
+  <script src="public/js/myawesomeextension.js"></script>
+  <script src="public/js/handleselectionextension.js"></script>
+  <script src="public/js/dockingpanelextension.js"></script>
 <!-- dashboard files -->
 <script src="js/Dashboard/Dashboard.js"></script>
 <script src="js/Dashboard/DashboardPanel.js"></script>
@@ -33,8 +33,8 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
 
 <!--  packages-->
-<a href="/issue.html">Issue editor</a>
-<a href="/gant.html">Calendarniy plan</a>
+<a href="public/issue.html">Issue editor</a>
+<a href="public/gant.html">Calendarniy plan</a>
 
 </head>
 
@@ -92,7 +92,7 @@
           <h4 class="modal-title" id="myModalLabel">Create new bucket</h4>
         </div>
         <div class="modal-body">
-          <input type="text" id="newBucketKey" class="form-control"> For demonstration purposes, objects (files)
+          <label for="newBucketKey"></label><input type="text" id="newBucketKey" class="form-control"> For demonstration purposes, objects (files)
           are NOT automatically translated. After you upload, right click on
           the object and select "Translate". Note: Technically your bucket name is required to be globally unique across
           the entire platform - to keep things simple with this tutorial your client ID will be prepended by default to

@@ -2,9 +2,10 @@
     THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/en/editor.html?c=custom-gantt-flight
 -->
 <!DOCTYPE html>
-<html style="height: 100%">
+<html style="height: 100%" lang="en">
     <head>
         <meta charset="utf-8">
+        <title>Hello</title>
     </head>
     <body style="height: 100%; margin: 0">
         <div id="container" style="height: 100%"></div>
@@ -195,34 +196,34 @@ function makeOption() {
 }
 
 function renderGanttItem(params, api) {
-    var categoryIndex = api.value(DIM_CATEGORY_INDEX);
-    var timeArrival = api.coord([api.value(DIM_TIME_ARRIVAL), categoryIndex]);
-    var timeDeparture = api.coord([api.value(DIM_TIME_DEPARTURE), categoryIndex]);
+    const categoryIndex = api.value(DIM_CATEGORY_INDEX);
+    const timeArrival = api.coord([api.value(DIM_TIME_ARRIVAL), categoryIndex]);
+    const timeDeparture = api.coord([api.value(DIM_TIME_DEPARTURE), categoryIndex]);
 
-    var coordSys = params.coordSys;
+    const coordSys = params.coordSys;
     _cartesianXBounds[0] = coordSys.x;
     _cartesianXBounds[1] = coordSys.x + coordSys.width;
     _cartesianYBounds[0] = coordSys.y;
     _cartesianYBounds[1] = coordSys.y + coordSys.height;
 
-    var barLength = timeDeparture[0] - timeArrival[0];
+    const barLength = timeDeparture[0] - timeArrival[0];
     // Get the heigth corresponds to length 1 on y axis.
-    var barHeight = api.size([0, 1])[1] * HEIGHT_RATIO;
-    var x = timeArrival[0];
-    var y = timeArrival[1] - barHeight;
+    const barHeight = api.size([0, 1])[1] * HEIGHT_RATIO;
+    const x = timeArrival[0];
+    const y = timeArrival[1] - barHeight;
 
-    var flightNumber = api.value(3) + '';
-    var flightNumberWidth = echarts.format.getTextRect(flightNumber).width;
-    var text = (barLength > flightNumberWidth + 40 && x + barLength >= 180)
+    const flightNumber = api.value(3) + '';
+    const flightNumberWidth = echarts.format.getTextRect(flightNumber).width;
+    const text = (barLength > flightNumberWidth + 40 && x + barLength >= 180)
         ? flightNumber : '';
 
-    var rectNormal = clipRectByRect(params, {
+    const rectNormal = clipRectByRect(params, {
         x: x, y: y, width: barLength, height: barHeight
     });
-    var rectVIP = clipRectByRect(params, {
+    const rectVIP = clipRectByRect(params, {
         x: x, y: y, width: (barLength) / 2, height: barHeight
     });
-    var rectText = clipRectByRect(params, {
+    const rectText = clipRectByRect(params, {
         x: x, y: y, width: barLength, height: barHeight
     });
 
@@ -253,7 +254,7 @@ function renderGanttItem(params, api) {
 }
 
 function renderAxisLabelItem(params, api) {
-    var y = api.coord([0, api.value(0)])[1];
+    const y = api.coord([0, api.value(0)])[1];
     if (y < params.coordSys.y + 5) {
         return;
     }
@@ -344,7 +345,7 @@ function initDrag() {
             timeArrival: param.value[DIM_TIME_ARRIVAL],
             timeDeparture: param.value[DIM_TIME_DEPARTURE]
         };
-        var style = {lineWidth: 2, fill: 'rgba(255,0,0,0.1)', stroke: 'rgba(255,0,0,0.8)', lineDash: [6, 3]};
+        const style = {lineWidth: 2, fill: 'rgba(255,0,0,0.1)', stroke: 'rgba(255,0,0,0.8)', lineDash: [6, 3]};
 
         _draggingEl = addOrUpdateBar(_draggingEl, _draggingRecord, style, 100);
         _draggingCursorOffset = [
@@ -359,8 +360,8 @@ function initDrag() {
             return;
         }
 
-        var cursorX = event.offsetX;
-        var cursorY = event.offsetY;
+        const cursorX = event.offsetX;
+        const cursorY = event.offsetY;
 
         // Move _draggingEl.
         _draggingEl.attr('position', [
@@ -403,11 +404,11 @@ function initDrag() {
     }
 
     function addOrUpdateBar(el, itemData, style, z) {
-        var pointArrival = myChart.convertToPixel('grid', [itemData.timeArrival, itemData.categoryIndex]);
-        var pointDeparture = myChart.convertToPixel('grid', [itemData.timeDeparture, itemData.categoryIndex]);
+        const pointArrival = myChart.convertToPixel('grid', [itemData.timeArrival, itemData.categoryIndex]);
+        const pointDeparture = myChart.convertToPixel('grid', [itemData.timeDeparture, itemData.categoryIndex]);
 
-        var barLength = pointDeparture[0] - pointArrival[0];
-        var barHeight = Math.abs(
+        const barLength = pointDeparture[0] - pointArrival[0];
+        const barHeight = Math.abs(
             myChart.convertToPixel('grid', [0, 0])[1] - myChart.convertToPixel('grid', [0, 1])[1]
         ) * HEIGHT_RATIO;
 
@@ -428,9 +429,9 @@ function initDrag() {
 
     function prepareDrop() {
         // Check droppable place.
-        var xPixel = _draggingEl.shape.x + _draggingEl.position[0];
-        var yPixel = _draggingEl.shape.y + _draggingEl.position[1];
-        var cursorData = myChart.convertFromPixel('grid', [xPixel, yPixel]);
+        const xPixel = _draggingEl.shape.x + _draggingEl.position[0];
+        const yPixel = _draggingEl.shape.y + _draggingEl.position[1];
+        const cursorData = myChart.convertFromPixel('grid', [xPixel, yPixel]);
         if (cursorData) {
             // Make drop shadow and _dropRecord
             _dropRecord = {
@@ -438,19 +439,19 @@ function initDrag() {
                 timeArrival: cursorData[0],
                 timeDeparture: cursorData[0] + _draggingTimeLength
             };
-            var style = {fill: 'rgba(0,0,0,0.4)'};
+            const style = {fill: 'rgba(0,0,0,0.4)'};
             _dropShadow = addOrUpdateBar(_dropShadow, _dropRecord, style, 99);
         }
     }
 
     // This is some business logic, don't care about it.
     function updateRawData() {
-        var flightData = _rawData.flight.data;
-        var movingItem = flightData[_draggingRecord.dataIndex];
+        const flightData = _rawData.flight.data;
+        const movingItem = flightData[_draggingRecord.dataIndex];
 
         // Check conflict
-        for (var i = 0; i < flightData.length; i++) {
-            var dataItem = flightData[i];
+        for (let i = 0; i < flightData.length; i++) {
+            const dataItem = flightData[i];
             if (dataItem !== movingItem
                 && _dropRecord.categoryIndex === dataItem[DIM_CATEGORY_INDEX]
                 && _dropRecord.timeArrival < dataItem[DIM_TIME_DEPARTURE]
@@ -471,8 +472,8 @@ function initDrag() {
     function autoDataZoomWhenDraggingOutside(cursorX, cursorY) {
         // When cursor is outside the cartesian and being dragging,
         // auto move the dataZooms.
-        var cursorDistX = getCursorCartesianDist(cursorX, _cartesianXBounds);
-        var cursorDistY = getCursorCartesianDist(cursorY, _cartesianYBounds);
+        const cursorDistX = getCursorCartesianDist(cursorX, _cartesianXBounds);
+        const cursorDistY = getCursorCartesianDist(cursorY, _cartesianYBounds);
 
         if (cursorDistX !== 0 || cursorDistY !== 0) {
             _autoDataZoomAnimator.start({
@@ -486,10 +487,10 @@ function initDrag() {
     }
 
     function dispatchDataZoom(params) {
-        var option = myChart.getOption();
-        var optionInsideX = option.dataZoom[DATA_ZOOM_X_INSIDE_INDEX];
-        var optionInsideY = option.dataZoom[DATA_ZOOM_Y_INSIDE_INDEX];
-        var batch = [];
+        const option = myChart.getOption();
+        const optionInsideX = option.dataZoom[DATA_ZOOM_X_INSIDE_INDEX];
+        const optionInsideY = option.dataZoom[DATA_ZOOM_Y_INSIDE_INDEX];
+        const batch = [];
 
         prepareBatch(batch, 'insideX', optionInsideX.start, optionInsideX.end, params.cursorDistX);
         prepareBatch(batch, 'insideY', optionInsideY.start, optionInsideY.end, -params.cursorDistY);
@@ -503,9 +504,9 @@ function initDrag() {
             if (cursorDist === 0) {
                 return;
             }
-            var sign = cursorDist / Math.abs(cursorDist);
-            var size = end - start;
-            var delta = DATA_ZOOM_AUTO_MOVE_SPEED * sign;
+            const sign = cursorDist / Math.abs(cursorDist);
+            const size = end - start;
+            const delta = DATA_ZOOM_AUTO_MOVE_SPEED * sign;
 
             start += delta;
             end += delta;
@@ -527,8 +528,8 @@ function initDrag() {
     }
 
     function getCursorCartesianDist(cursorXY, bounds) {
-        var dist0 = cursorXY - (bounds[0] + DATA_ZOOM_AUTO_MOVE_DETECT_AREA_WIDTH);
-        var dist1 = cursorXY - (bounds[1] - DATA_ZOOM_AUTO_MOVE_DETECT_AREA_WIDTH);
+        const dist0 = cursorXY - (bounds[0] + DATA_ZOOM_AUTO_MOVE_DETECT_AREA_WIDTH);
+        const dist1 = cursorXY - (bounds[1] - DATA_ZOOM_AUTO_MOVE_DETECT_AREA_WIDTH);
         return dist0 * dist1 <= 0
             ? 0 // cursor is in cartesian
             : dist0 < 0
@@ -537,8 +538,8 @@ function initDrag() {
     }
 
     function makeAnimator(callback) {
-        var requestId;
-        var callbackParams;
+        let requestId;
+        let callbackParams;
         // Use throttle to prevent from calling dispatchAction frequently.
         callback = echarts.throttle(callback, DATA_ZOOM_AUTO_MOVE_THROTTLE);
 

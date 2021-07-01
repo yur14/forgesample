@@ -1,7 +1,7 @@
-var viewer;
+let viewer;
 
 function launchViewer(urn) {
-  var options = {
+  const options = {
     env: 'AutodeskProduction',
     getAccessToken: getForgeToken
   };
@@ -14,13 +14,13 @@ function launchViewer(urn) {
     //viewer = new Autodesk.Viewing.GuiViewer3D(document.getElementById('forgeViewer'), { extensions: ['ModelSummaryExtension'] });
 
     viewer.start();
-    var documentId = 'urn:' + urn;
+    const documentId = 'urn:' + urn;
     Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
   });
 }
 
 function onDocumentLoadSuccess(doc) {
-  var viewables = doc.getRoot().getDefaultGeometry();
+  const viewables = doc.getRoot().getDefaultGeometry();
   viewer.loadDocumentNode(doc, viewables).then(i => {
     // documented loaded, any action?
   });

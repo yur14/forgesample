@@ -48,8 +48,7 @@ async function exportIssues(opts) {
     fillIssueOwners(workbook.addWorksheet('Owners'), users);
     fillIssueLocations(workbook.addWorksheet('Locations'), locations);
     fillIssueDocuments(workbook.addWorksheet('Documents'), documents);
-    const buffer = await workbook.xlsx.writeBuffer();
-    return buffer;
+    return await workbook.xlsx.writeBuffer();
 }
 
 async function loadIssues(bim360, issueContainerID, offset, limit) {
@@ -71,14 +70,12 @@ async function loadIssues(bim360, issueContainerID, offset, limit) {
 
 async function loadIssueTypes(bim360, issueContainerID) {
     console.log('Fetching BIM360 issue types.');
-    const issueTypes = await bim360.listIssueTypes(issueContainerID, true);
-    return issueTypes;
+    return await bim360.listIssueTypes(issueContainerID, true);
 }
 
 async function loadUsers(bim360, accountId) {
     console.log('Fetching BIM360 users.');
-    const users = await bim360.listUsers(accountId);
-    return users;
+    return await bim360.listUsers(accountId);
 }
 
 async function loadLocations(bim360, locationContainerID) {
@@ -398,7 +395,7 @@ async function importIssues(buffer, issueContainerID, threeLeggedToken, sequenti
     };
 
     // If cell value contains rich text, convert it to regular text
-    function unrich(val) {
+    function uric(val) {
         val = val || '';
         if (typeof val === 'object' && val.hasOwnProperty('richText')) {
             return val.richText.map(richText => richText.text).join('');
@@ -438,17 +435,17 @@ async function importIssues(buffer, issueContainerID, threeLeggedToken, sequenti
         try {
             const issueID = row.values[1];
             const currentIssueAttributes = issues.find(issue => issue.id === issueID);
-            const newIssueTypeMatch = unrich(row.values[2]).match(/.+\[(.+),(.+)\]$/);
+            const newIssueTypeMatch = uric(row.values[2]).match(/.+\[(.+),(.+)]$/);
             if (!newIssueTypeMatch) {
                 results.failed.push({ id: issueID, row: rowNumber, error: 'Could not parse issue type and subtype IDs.' });
                 return;
             }
-            const newIssueOwner = unrich(row.values[5]).match(/.+\[(.+)\]$/);
+            const newIssueOwner = uric(row.values[5]).match(/.+\[(.+)]$/);
             if (!newIssueOwner) {
                 results.failed.push({ id: issueID, row: rowNumber, error: 'Could not parse issue owner ID.' });
                 return;
             }
-            const newIssueLocation = unrich(row.values[6]).match(/.+\[(.+)\]$/);
+            const newIssueLocation = uric(row.values[6]).match(/.+\[(.+)]$/);
             // if (!newIssueLocation) {
             //     results.failed.push({ id: issueID, error: 'Could not parse issue location ID.' });
             //     return;
@@ -456,13 +453,13 @@ async function importIssues(buffer, issueContainerID, threeLeggedToken, sequenti
             const newIssueAttributes = {
                 ng_issue_type_id: newIssueTypeMatch[1],
                 ng_issue_subtype_id: newIssueTypeMatch[2],
-                title: unrich(row.values[3]),
-                description: unrich(row.values[4]),
+                title: uric(row.values[3]),
+                description: uric(row.values[4]),
                 owner: newIssueOwner[1],
                 lbs_location: newIssueLocation ? newIssueLocation[1] : null,
                 //document: ...
-                status: unrich(row.values[8]),
-                answer: unrich(row.values[9])
+                status: uric(row.values[8]),
+                answer: uric(row.values[9])
             };
 
             // Check if the issue exists in BIM360
@@ -477,7 +474,7 @@ async function importIssues(buffer, issueContainerID, threeLeggedToken, sequenti
                 // Check if any of the new issue properties differ from the original in BIM360, and if they *can* be changed
                 let blockedAttributeUpdates = [];
                 for (const key of Object.getOwnPropertyNames(newIssueAttributes)) {
-                    if (currentIssueAttributes[key] == newIssueAttributes[key]) { // both values are equal
+                    if (currentIssueAttributes[key] === newIssueAttributes[key]) { // both values are equal
                         delete newIssueAttributes[key];
                     } else if (!currentIssueAttributes[key] && !newIssueAttributes[key]) { // both values are "falsy" (e.g., an empty string and a null)
                         delete newIssueAttributes[key];

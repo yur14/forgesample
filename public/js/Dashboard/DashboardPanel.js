@@ -25,9 +25,12 @@ class DashboardPanelChart extends DashboardPanel {
     }
 
     generateColors(count) {
-        var background = []; var borders = [];
-        for (var i = 0; i < count; i++) {
-            var r = Math.round(Math.random() * 255); var g = Math.round(Math.random() * 255); var b = Math.round(Math.random() * 255);
+        const background = [];
+        const borders = [];
+        for (let i = 0; i < count; i++) {
+            const r = Math.round(Math.random() * 255);
+            const g = Math.round(Math.random() * 255);
+            const b = Math.round(Math.random() * 255);
             background.push('rgba(' + r + ', ' + g + ', ' + b + ', 0.2)');
             borders.push('rgba(' + r + ', ' + g + ', ' + b + ', 0.2)');
         }
@@ -43,10 +46,10 @@ class ModelData {
     }
 
     init(callback) {
-        var _this = this;
+        const _this = this;
 
         _this.getAllLeafComponents(function (dbIds) {
-            var count = dbIds.length;
+            let count = dbIds.length;
             dbIds.forEach(function (dbId) {
                 viewer.getProperties(dbId, function (props) {
                     props.properties.forEach(function (prop) {
@@ -54,14 +57,14 @@ class ModelData {
 
                         // some adjustments for revit:
                         prop.displayValue = prop.displayValue.replace('Revit ', ''); // remove this Revit prefix
-                        if (prop.displayValue.indexOf('<') == 0) return; // skip categories that start with <
+                        if (prop.displayValue.indexOf('<') === 0) return; // skip categories that start with <
 
                         // ok, now let's organize the data into this hash table
                         if (_this._modelData[prop.displayName] == null) _this._modelData[prop.displayName] = {};
                         if (_this._modelData[prop.displayName][prop.displayValue] == null) _this._modelData[prop.displayName][prop.displayValue] = [];
                         _this._modelData[prop.displayName][prop.displayValue].push(dbId);
                     })
-                    if ((--count) == 0) callback();
+                    if ((--count) === 0) callback();
                 });
             })
         })

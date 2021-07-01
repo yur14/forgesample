@@ -15,7 +15,7 @@ $(document).ready(function () {
     $('#hiddenUploadField').change(function () {
       var node = $('#appBuckets').jstree(true).get_selected(true)[0];
       var _this = this;
-      if (_this.files.length == 0) return;
+      if (_this.files.length === 0) return;
       var file = _this.files[0];
       switch (node.type) {
         case 'bucket':
@@ -50,7 +50,7 @@ $(document).ready(function () {
         $('#createBucketModal').modal('toggle');
       },
       error: function (err) {
-        if (err.status == 409)
+        if (err.status === 409)
           alert('Bucket already exists - 409: Duplicated')
         console.log(err);
       }
@@ -89,7 +89,7 @@ $(document).ready(function () {
     }).on('loaded.jstree', function () {
       $('#appBuckets').jstree('open_all');
     }).bind("activate_node.jstree", function (evt, data) {
-      if (data != null && data.node != null && data.node.type == 'object') {
+      if (data != null && data.node != null && data.node.type === 'object') {
         $("#forgeViewer").empty();
         var urn = data.node.id;
         getForgeToken(function (access_token) {
