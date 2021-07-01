@@ -5,7 +5,7 @@ const config = require('../config');
 let authClient = new AuthenticationClient(config.client_id, config.client_secret);
 let router = express.Router();
 
-// Refresh token whenever needed
+// Refresh token whenever needed.Обновлять токен при необходимости
 router.use('/', async function (req, res, next) {
     if (req.session.access_token) {
         if (Date.now() > req.session.expires_at) {

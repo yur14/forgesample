@@ -27,6 +27,7 @@ class HandleSelectionExtension extends Autodesk.Viewing.Extension {
 
     onToolbarCreated() {
         // Create a new toolbar group if it doesn't exist
+        // Создайте новую группу панелей инструментов, если она не существует
         this._group = this.viewer.toolbar.getControl('allMyAwesomeExtensionsToolbar');
         if (!this._group) {
             this._group = new Autodesk.Viewing.UI.ControlGroup('allMyAwesomeExtensionsToolbar');
@@ -34,22 +35,23 @@ class HandleSelectionExtension extends Autodesk.Viewing.Extension {
         }
 
         // Add a new button to the toolbar group
+        // Добавить новую кнопку в группу панелей инструментов
         this._button = new Autodesk.Viewing.UI.Button('handleSelectionExtensionButton');
         this._button.onClick = (ev) => {
-            // Execute an action here
-            // Get current selection
+            // Execute an action here.Выполните действие здесь
+            // Get current selection.Получить текущий выбор
             const selection = this.viewer.getSelection();
             this.viewer.clearSelection();
-            // Anything selected?
+            // Anything selected? Что-нибудь выбрано?
             if (selection.length > 0) {
                 let isolated = [];
-                // Iterate through the list of selected dbIds
+                // Iterate through the list of selected dbIds.Перебирать список выбранных dbId
                 selection.forEach((dbId) => {
-                    // Get properties of each dbId
+                    // Get properties of each dbId.Получить свойства каждого dbId
                     this.viewer.getProperties(dbId, (props) => {
-                        // Output properties to console
+                        // Output properties to console.Вывод свойств в консоль
                         console.log(props);
-                        // Ask if want to isolate
+                        // Ask if want to isolate.Спросите, хотите ли вы изолировать
                         if (confirm(`Isolate ${props.name} (${props.externalId})?`)) {
                             isolated.push(dbId);
                             this.viewer.isolate(isolated);
@@ -57,7 +59,7 @@ class HandleSelectionExtension extends Autodesk.Viewing.Extension {
                     });
                 });
             } else {
-                // If nothing selected, restore
+                // If nothing selected, restore.Если ничего не выбрано, восстановить
                 this.viewer.isolate(0);
             }
 

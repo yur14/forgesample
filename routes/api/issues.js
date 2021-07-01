@@ -30,10 +30,10 @@ function handleError(err, res) {
     }
 }
 
-// Parse JSON body
+// Parse JSON body.Разобрать тело JSON
 router.use(express.json());
 
-// Refresh token whenever needed
+// Refresh token whenever needed.Обновлять токен при необходимости
 router.use('/', async function (req, res, next) {
     if (req.session.access_token) {
         if (Date.now() > req.session.expires_at) {
@@ -178,20 +178,22 @@ router.post('/:issue_container/import', upload.single('xlsx'), async function (r
 
 // GET /api/issues/:issue_container/config.json.zip
 // Returns password-protected archive with configuration for the command-line tools available in this project.
+// Возвращает защищенный паролем архив с конфигурацией инструментов командной строки, доступных в этом проекте.
 router.get('/:issue_container/config.json.zip', async function (req, res) {
     const { issue_container } = req.params;
     const { hub_id, region, location_container_id, project_id } = req.query;
     try {
         // Refresh the 3-legged token to make sure the user gets one "as fresh as possible"
+        // Обновите трехэлементный токен, чтобы убедиться, что пользователь получает один «как можно более свежий».
         const token = await authClient.refreshToken(config.scopes, req.session.refresh_token);
         req.session.access_token = token.access_token;
         req.session.refresh_token = token.refresh_token;
         req.session.expires_at = Date.now() + token.expires_in * 1000;
 
-        // Get a fresh 2-legged token as well
+        // Get a fresh 2-legged token as well.Также получите свежий двуногий жетон
         const twoLeggedToken = await authClient.authenticate(['data:read', 'data:write', 'data:create', 'account:read']);
 
-        // Pack everything into a password-protected zip
+        // Pack everything into a password-protected zip.Упакуйте все в защищенный паролем почтовый индекс
         const cfg = JSON.stringify({
             created_at: new Date().toISOString(),
             expires_at: new Date(req.session.expires_at).toISOString(),

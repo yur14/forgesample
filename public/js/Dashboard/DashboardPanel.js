@@ -1,4 +1,4 @@
-// Dashboard panel base
+// Dashboard panel base.Основание панели приборов
 class DashboardPanel {
     load(parentDivId, divId, viewer) {
         this.divId = divId;
@@ -7,7 +7,7 @@ class DashboardPanel {
     }
 }
 
-// Dashboard panels for charts
+// Dashboard panels for charts.Панели инструментов для графиков
 class DashboardPanelChart extends DashboardPanel {
     load(parentDivId, divId, viewer, modelData) {
         if (!modelData.hasProperty(this.propertyToUse)){
@@ -38,7 +38,7 @@ class DashboardPanelChart extends DashboardPanel {
     }
 }
 
-// Model data in format for charts
+// Model data in format for charts.Данные модели в формате для диаграмм
 class ModelData {
     constructor(viewer) {
         this._modelData = {};
@@ -55,11 +55,11 @@ class ModelData {
                     props.properties.forEach(function (prop) {
                         if (!isNaN(prop.displayValue)) return; // let's not categorize properties that store numbers
 
-                        // some adjustments for revit:
+                        // some adjustments for revit: некоторые корректировки для Revit
                         prop.displayValue = prop.displayValue.replace('Revit ', ''); // remove this Revit prefix
                         if (prop.displayValue.indexOf('<') === 0) return; // skip categories that start with <
 
-                        // ok, now let's organize the data into this hash table
+                        // ok, now let's organize the data into this hash table.хорошо, теперь давайте организуем данные в эту хеш-таблицу
                         if (_this._modelData[prop.displayName] == null) _this._modelData[prop.displayName] = {};
                         if (_this._modelData[prop.displayName][prop.displayValue] == null) _this._modelData[prop.displayName][prop.displayValue] = [];
                         _this._modelData[prop.displayName][prop.displayValue].push(dbId);

@@ -7,7 +7,7 @@ let router = express.Router();
 
 //let authClient = new AuthenticationClient(config.client_id, config.client_secret);
 
-// GET /api/forge/oauth/token - generates a public access token (required by the Forge viewer).
+// GET /api/forge/oauth/token - generates a public access token (required by the Forge viewer).генерирует токен публичного доступа (требуется для просмотра Forge).
 router.get('/token', async (req, res, next) => {
     try {
         const token = await getPublicToken();

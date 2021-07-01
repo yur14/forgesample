@@ -1,6 +1,6 @@
 // Autodesk Forge configuration
 module.exports = {
-    // Set environment variables or hard-code here
+    // Set environment variables or hard-code here.Задайте здесь переменные среды или жесткий код
     credentials: {
         //client_id: process.env.FORGE_CLIENT_ID,
         //client_secret: process.env.FORGE_CLIENT_SECRET,
@@ -10,9 +10,9 @@ module.exports = {
     },
     
     scopes: {
-        // Required scopes for the server-side application
+        // Required scopes for the server-side application.Необходимые области для серверного приложения
         internal: ['bucket:create', 'bucket:read', 'data:read', 'data:create', 'data:write'],
-        // Required scope for the client-side viewer
+        // Required scope for the client-side viewer.Требуемая область для средства просмотра на стороне клиента
         public: ['viewables:read']
     }
 };

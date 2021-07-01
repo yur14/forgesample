@@ -18,10 +18,10 @@ function handleError(err, res) {
     }
 }
 
-// Parse JSON body
+// Parse JSON body.Разобрать тело JSON
 router.use(express.json());
 
-// Refresh token whenever needed
+// Refresh token whenever needed.Обновлять токен при необходимости
 router.use('/', async function (req, res, next) {
     if (req.session.access_token) {
         if (Date.now() > req.session.expires_at) {
@@ -47,7 +47,7 @@ router.get('/:account/users', async function (req, res) {
     const { account } = req.params;
     try {
         let filter = {
-            partial: true // Perform a fuzzy search
+            partial: true // Perform a fuzzy search.Выполните нечеткий поиск
         };
         if (req.query.name) {
             filter.name = req.query.name;

@@ -431,12 +431,12 @@ function initDrag() {
     }
 
     function prepareDrop() {
-        // Check droppable place.
+        // Check droppable place. Проверить место для заброса.
         const xPixel = _draggingEl.shape.x + _draggingEl.position[0];
         const yPixel = _draggingEl.shape.y + _draggingEl.position[1];
         const cursorData = myChart.convertFromPixel('grid', [xPixel, yPixel]);
         if (cursorData) {
-            // Make drop shadow and _dropRecord
+            // Make drop shadow and _dropRecord . Сделайте тень и _dropRecord
             _dropRecord = {
                 categoryIndex: Math.floor(cursorData[1]),
                 timeArrival: cursorData[0],
@@ -447,12 +447,12 @@ function initDrag() {
         }
     }
 
-    // This is some business logic, don't care about it.
+    // This is some business logic, don't care about it. Это какая-то бизнес-логика, не волнуйтесь об этом.
     function updateRawData() {
         const flightData = _rawData.flight.data;
         const movingItem = flightData[_draggingRecord.dataIndex];
 
-        // Check conflict
+        // Check conflict .Проверить конфликт
         for (let i = 0; i < flightData.length; i++) {
             const dataItem = flightData[i];
             if (dataItem !== movingItem
@@ -465,7 +465,7 @@ function initDrag() {
             }
         }
 
-        // No conflict.
+        // No conflict. Никакого конфликта.
         movingItem[DIM_CATEGORY_INDEX] = _dropRecord.categoryIndex;
         movingItem[DIM_TIME_ARRIVAL] = _dropRecord.timeArrival;
         movingItem[DIM_TIME_DEPARTURE] = _dropRecord.timeDeparture;
@@ -473,8 +473,8 @@ function initDrag() {
     }
 
     function autoDataZoomWhenDraggingOutside(cursorX, cursorY) {
-        // When cursor is outside the cartesian and being dragging,
-        // auto move the dataZooms.
+        // When cursor is outside the cartesian and being dragging, Когда курсор находится за пределами декартовой системы координат и перетаскивается,
+        // auto move the dataZooms. автоматическое перемещение dataZooms.
         const cursorDistX = getCursorCartesianDist(cursorX, _cartesianXBounds);
         const cursorDistY = getCursorCartesianDist(cursorY, _cartesianYBounds);
 
@@ -534,16 +534,17 @@ function initDrag() {
         const dist0 = cursorXY - (bounds[0] + DATA_ZOOM_AUTO_MOVE_DETECT_AREA_WIDTH);
         const dist1 = cursorXY - (bounds[1] - DATA_ZOOM_AUTO_MOVE_DETECT_AREA_WIDTH);
         return dist0 * dist1 <= 0
-            ? 0 // cursor is in cartesian
+            ? 0 // cursor is in cartesian . курсор в декартовой системе координат
             : dist0 < 0
-            ? dist0 // cursor is at left/top of cartesian
-            : dist1; // cursor is at right/bottom of cartesian
+            ? dist0 // cursor is at left/top of cartesian , курсор находится слева / вверху декартовой
+            : dist1; // cursor is at right/bottom of cartesian . курсор находится справа / внизу от декартовой системы координат
     }
 
     function makeAnimator(callback) {
         let requestId;
         let callbackParams;
         // Use throttle to prevent from calling dispatchAction frequently.
+        // Используйте дроссель, чтобы предотвратить частый вызов dispatchAction.
         callback = echarts.throttle(callback, DATA_ZOOM_AUTO_MOVE_THROTTLE);
 
         function onFrame() {

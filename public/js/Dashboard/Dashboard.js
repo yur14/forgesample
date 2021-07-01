@@ -11,7 +11,7 @@ $(document).ready(function () {
     });
 })
 
-// Handles the Dashboard panels
+// Handles the Dashboard panels.Обрабатывает панели Dashboard
 class Dashboard {
     constructor(viewer, panels) {
         var _this = this;
@@ -24,9 +24,10 @@ class Dashboard {
     }
 
     adjustLayout() {
-        // this function may vary for layout to layout...
-        // for learn forge tutorials, let's get the ROW and adjust the size of the 
+        // this function may vary for layout to layout...эта функция может отличаться от макета к макету ..
+        // for learn forge tutorials, let's get the ROW and adjust the size of the .для изучения руководств по кузнице возьмем СТРОКУ и отрегулируем размер
         // columns so it can fit the new dashboard column, also we added a smooth transition css class for a better user experience
+        // столбцы, чтобы он мог поместиться в новый столбец панели инструментов, также мы добавили класс CSS с плавным переходом для лучшего взаимодействия с пользователем
         var row = $(".row").children();
         $(row[0]).removeClass('col-sm-4').addClass('col-sm-2 transition-width');
         $(row[1]).removeClass('col-sm-8').addClass('col-sm-7 transition-width').after('<div class="col-sm-3 transition-width" id="dashboard"></div>');

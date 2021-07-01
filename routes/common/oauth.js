@@ -4,8 +4,9 @@ const config = require('../../config');
 
 /**
  * Initializes a Forge client for 2-legged authentication.
- * @param {string[]} scopes List of resource access scopes.
- * @returns {AuthClientTwoLegged} 2-legged authentication client.
+ * Инициализирует клиент Forge для двусторонней аутентификации.
+ * @param {string[]} scopes List of resource access scopes.scopes Список областей доступа к ресурсам.
+ * @returns {AuthClientTwoLegged} 2-legged authentication client.Двухсторонний клиент аутентификации.
  */
 
 //let authClient = new AuthenticationClient(config.client_id, config.client_secret);
@@ -30,6 +31,7 @@ async function getToken(scopes) {
 
 /**
  * Retrieves a 2-legged authentication token for preconfigured public scopes.
+ * Получает двухсторонний токен аутентификации для предварительно настроенных общедоступных областей.
  * @returns Token object: { "access_token": "...", "expires_at": "...", "expires_in": "...", "token_type": "..." }.
  */
 async function getPublicToken() {
@@ -38,6 +40,7 @@ async function getPublicToken() {
 
 /**
  * Retrieves a 2-legged authentication token for preconfigured internal scopes.
+ * Получает двухсторонний токен аутентификации для предварительно настроенных внутренних областей.
  * @returns Token object: { "access_token": "...", "expires_at": "...", "expires_in": "...", "token_type": "..." }.
  */
 async function getInternalToken() {
